@@ -203,14 +203,29 @@ autoptr array<autoptr eAIDynamicPatrol> patrols = {};
 class CustomPatrol : eAIDynamicPatrol 
 {
 	override void OnPatrolSpawn(eAIGroup patrol) 
-	{
-		if(m_pos == guard_list[0][0] || m_pos == guard_list[1][0])
+	{   
+
+        ///Guard Speed Randomizer///    
+
+        int RandomGuardCoord = Math.RandomInt(0,2); // # of guard_list starting with 0-1 (including 0)
+		if(m_pos == guard_list[RandomGuardCoord][0])
 		{
-			patrol.SetFaction(new eAIFactionGuards());
-			patrol.SetSpeedLimit(1.0);
+            int guardspeed = Math.RandomInt(0,2); // # of Factions starting with 0
+            if (guardspeed==0)
+            {
+			patrol.SetFaction(new eAIFactionGuards());patrol.SetSpeedLimit(1.0);
+            }
+            else if (guardspeed==1)
+		 	{
+		 	patrol.SetFaction(new eAIFactionGuards());patrol.SetSpeedLimit(2.0);	
+		 	}
+		 	else if (guardspeed==2)
+		 	{
+		 	patrol.SetFaction(new eAIFactionGuards());patrol.SetSpeedLimit(3.0);
+		 	}
 		}
 
-		int RandomPatrolCoord = Math.RandomInt(0,47); // # of patrol_list starting with 0-47
+		int RandomPatrolCoord = Math.RandomInt(0,47); // # of patrol_list starting with 0-47 (Including 0)
 		if(	m_pos == patrol_list[RandomPatrolCoord][0])
 		{
 		 	int randomfaction = Math.RandomInt(1,4); // # of Factions starting with 1
